@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ReceiptItems<T> {
     @JsonProperty("shortDescription")
-    private String shortDescription;
+    public String shortDescription;
 
     @JsonProperty("price")
-    private String price;
+    public String price;
 }

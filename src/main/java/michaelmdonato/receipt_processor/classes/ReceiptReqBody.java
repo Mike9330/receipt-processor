@@ -5,12 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class ReceiptReqBody {
-
-//    public String id;
-//
-//    public Receipt(String id) {
-//        this.id = id;
-//    }
     @JsonProperty("retailer")
     private String retailer;
 
@@ -26,7 +20,23 @@ public class ReceiptReqBody {
     @JsonProperty("total")
     private String total;
 
-    // public void setId(String id) {this.id = id;}
+    public String getRetailer() {
+        return retailer;
+    }
 
-    // public String getId() {return this.id;}
+    public String getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public String getPurchaseTime() {
+        return purchaseTime;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public List<ReceiptItems> getItems() {
+        return items;
+    }
 }
