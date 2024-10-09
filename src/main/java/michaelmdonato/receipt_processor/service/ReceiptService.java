@@ -1,9 +1,6 @@
 package michaelmdonato.receipt_processor.service;
 
-import michaelmdonato.receipt_processor.classes.Points;
-import michaelmdonato.receipt_processor.classes.Receipt;
-import michaelmdonato.receipt_processor.classes.ReceiptItems;
-import michaelmdonato.receipt_processor.classes.ReceiptReqBody;
+import michaelmdonato.receipt_processor.classes.*;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -15,7 +12,7 @@ import java.util.UUID;
 public class ReceiptService {
     private final String fileName = "receipts.csv";
 
-    public Receipt processReceipts(ReceiptReqBody reqBody) throws IOException {
+    public ResponseId processReceipts(ReceiptReqBody reqBody) throws IOException {
         String genId = UUID.randomUUID().toString();
 
         Receipt newReceipt = new Receipt(genId);
@@ -30,7 +27,9 @@ public class ReceiptService {
 
         saveNewReceipt(newReceipt);
 
-        return newReceipt;
+        ResponseId response = new ResponseId(newReceipt.getId());
+
+        return response;
     }
 
     public Points getPoints(String idFind) throws IOException {
@@ -124,12 +123,13 @@ public class ReceiptService {
 
         String purTime = reqBody.getPurchaseTime();
         int timeNum = Integer.parseInt(purTime.substring(0,2));
+        int mins = Integer.parseInt(purTime.substring(3,5));
 
         if (dayNum % 2 != 0) {
             points += 6;
         }
 
-        if (14 <= timeNum && timeNum <= 16) {
+        if ((14 <= timeNum && mins != 0) || timeNum == 15) {
             points += 10;
         }
         return points;
