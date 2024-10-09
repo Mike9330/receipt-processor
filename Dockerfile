@@ -1,12 +1,14 @@
 FROM openjdk:17-jdk-slim
 
-WORKDIR /app
-
 COPY gradlew .
 COPY gradle/ gradle/
 COPY . .
 
-RUN ./gradlew build --no-daemon
+RUN ./gradlew clean
+
+RUN ./gradlew build
+
+RUN ./gradlew bootJar
 
 RUN ls -1 build/libs/*.jar
 
