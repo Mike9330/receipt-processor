@@ -1,5 +1,6 @@
 package michaelmdonato.receipt_processor.controllers;
 
+import michaelmdonato.receipt_processor.classes.Points;
 import michaelmdonato.receipt_processor.classes.Receipt;
 import michaelmdonato.receipt_processor.classes.ReceiptReqBody;
 import michaelmdonato.receipt_processor.service.ReceiptService;
@@ -23,7 +24,7 @@ public class ReceiptController {
     }
 
     @GetMapping("/{id}/process")
-    public String getPoints(@PathVariable String id) throws IOException {
+    public Points getPoints(@PathVariable String id) throws IOException {
         return this.receiptService.getPoints(String.valueOf(id));
     }
 }

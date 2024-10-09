@@ -1,5 +1,6 @@
 package michaelmdonato.receipt_processor.service;
 
+import michaelmdonato.receipt_processor.classes.Points;
 import michaelmdonato.receipt_processor.classes.Receipt;
 import michaelmdonato.receipt_processor.classes.ReceiptItems;
 import michaelmdonato.receipt_processor.classes.ReceiptReqBody;
@@ -32,7 +33,7 @@ public class ReceiptService {
         return newReceipt;
     }
 
-    public String getPoints(String idFind) throws IOException {
+    public Points getPoints(String idFind) throws IOException {
         String id; String points; String date; String time; String total;
 
         try {
@@ -47,16 +48,19 @@ public class ReceiptService {
                 total = scanner.next();
 
                 if (id.equals(idFind)) {
-                    return points;
+                    Points p  = new Points();
+                    p.setPoints(Integer.parseInt(points.trim()));
+                    return p;
                 }
             }
 
 
             scanner.close();
-            return "Receipt not found";
+            // return "Receipt not found";
         } catch (IOException e) {
             throw  e;
         }
+        return null;
     }
 
 
