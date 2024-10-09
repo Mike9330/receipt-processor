@@ -21,4 +21,9 @@ public class ReceiptController {
     public Receipt processReciepts(@RequestBody ReceiptReqBody reqBody) throws IOException {
         return this.receiptService.processReceipts(reqBody);
     }
+
+    @GetMapping("/{id}/process")
+    public String getPoints(@PathVariable String id) throws IOException {
+        return this.receiptService.getPoints(String.valueOf(id));
+    }
 }

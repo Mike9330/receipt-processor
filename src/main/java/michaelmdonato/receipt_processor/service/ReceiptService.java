@@ -5,12 +5,15 @@ import michaelmdonato.receipt_processor.classes.ReceiptItems;
 import michaelmdonato.receipt_processor.classes.ReceiptReqBody;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 
 @Service
 public class ReceiptService {
+    private final String fileName = "receipts.csv";
+
     public Receipt processReceipts(ReceiptReqBody reqBody) throws IOException {
         String genId = UUID.randomUUID().toString();
 
@@ -21,7 +24,48 @@ public class ReceiptService {
         newReceipt.setTotal(reqBody.getTotal());
         newReceipt.setItems(reqBody.getItems());
 
+        int points = pointsPerItem(reqBody) + pointsRetailerName(reqBody) + pointsTotal(reqBody) + pointsDate(reqBody);
+        newReceipt.setPoints(String.valueOf(points));
+
+        saveNewReceipt(newReceipt);
+
         return newReceipt;
+    }
+
+    public String getPoints(String idFind) throws IOException {
+        String id; String points; String date; String time; String total;
+
+        try {
+            Scanner scanner = new Scanner(new File(fileName));
+            scanner.useDelimiter(("[,\n]"));
+
+            while (scanner.hasNext()) {
+                id = scanner.next();
+                points = scanner.next();
+                date = scanner.next();
+                time = scanner.next();
+                total = scanner.next();
+
+                if (id.equals(idFind)) {
+                    return points;
+                }
+            }
+
+
+            scanner.close();
+            return "Receipt not found";
+        } catch (IOException e) {
+            throw  e;
+        }
+    }
+
+
+    public void saveNewReceipt(Receipt receipt) throws IOException {
+        PrintWriter out = new PrintWriter(new FileWriter(fileName, true));
+
+        out.printf("%s, %s, %s, %s, %s\n", receipt.getId(), receipt.getPoints(), receipt.getPurchaseDate(), receipt.getPurchaseTime(), receipt.getTotal());
+
+        out.close();
     }
 
     //calculates two points for every item on the receipt (5 points every two items,

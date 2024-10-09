@@ -8,6 +8,7 @@ public class Receipt {
     public String purchaseTime;
     public String total;
     public List<ReceiptItems> items;
+    public String points;
 
     public Receipt(String id) {this.id = id;}
 
@@ -29,6 +30,26 @@ public class Receipt {
     public void setItems(List<ReceiptItems> items) {
         this.items = items;
     }
+    public void setPoints(String points) {
+        this.points = points;
+    }
 
-
+     public String getId() {
+        return this.id;
+     }
+     public String getRetailer() {
+        return this.retailer;
+     }
+     public String getPurchaseDate() {
+        return this.purchaseDate;
+     }
+     public String getPurchaseTime() {
+        return this.purchaseTime;
+     }
+     public String getTotal() {
+        return this.total;
+     }
+     public String getPoints() {
+        return this.points;
+     }
 }
