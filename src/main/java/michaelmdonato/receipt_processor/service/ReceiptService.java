@@ -56,7 +56,6 @@ public class ReceiptService {
 
 
             scanner.close();
-            // return "Receipt not found";
         } catch (IOException e) {
             throw  e;
         }
@@ -72,7 +71,7 @@ public class ReceiptService {
         out.close();
     }
 
-    //calculates two points for every item on the receipt (5 points every two items,
+    //calculates two points for every item on the receipt (5 points every two items, and adds the price * 0.2 to the points if the desc is a multiple of 3)
     public int pointsPerItem(ReceiptReqBody reqBody) {
         int points = 0, count = 0;
         List<ReceiptItems> items = reqBody.getItems();
